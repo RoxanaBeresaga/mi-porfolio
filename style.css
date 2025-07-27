@@ -1,0 +1,820 @@
+/* style.css */
+
+/* --- 1. Variables CSS para Colores y Fuentes --- */
+/* Estas variables facilitan el manejo de la paleta de colores y la tipografía */
+:root {
+    --primary-color: #87CEEB; /* Azul Cielo - para acentos, botones */
+    --primary-color-dark: #6495ED; /* Azul Aciano - para hover de primary */
+    --accent-color-light: #FFC0CB; /* Rosa Claro - para fondos sutiles, detalles */
+    --accent-color-dark: #FF69B4; /* Rosa Chicle - para acentos más fuertes, iconos */
+    --text-color: #333333; /* Color de texto principal (gris oscuro) */
+    --heading-color: #2c3e50; /* Color para títulos (azul oscuro/casi negro) */
+    --background-color: #F8F8F8; /* Fondo general de la página (gris muy claro) */
+    --card-bg-color: #FFFFFF; /* Fondo de tarjetas y contenedores (blanco puro) */
+    --border-color: #EEEEEE; /* Color para bordes sutiles */
+    --white-color: #FFFFFF;
+
+    --font-family-primary: 'Arial', sans-serif; /* Fuente general para el cuerpo */
+    --font-family-headings: 'Helvetica Neue', sans-serif; /* Fuente para títulos, más impactante */
+
+    --spacing-unit: 1rem; /* Unidad base para márgenes y paddings */
+}
+
+/* --- 2. Reseteo Básico y Estilos Globales --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family-primary);
+    color: var(--text-color);
+    background-color: var(--background-color);
+    line-height: 1.6;
+    overflow-x: hidden; /* Evita desbordamientos horizontales */
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary-color-dark);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-family-headings);
+    color: var(--heading-color);
+    margin-bottom: var(--spacing-unit);
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 2.5rem; /* Ajustado para títulos de sección */
+    text-align: center;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: var(--accent-color-dark);
+    margin: 0.5rem auto 0;
+    border-radius: 2px;
+}
+
+
+/* --- 3. Contenedor Principal de la Aplicación --- */
+.app-container {
+    display: flex;
+    min-height: 100vh; /* Asegura que ocupe al menos toda la altura de la vista */
+}
+
+/* --- 4. Estilos de la Barra Lateral (Sidebar) --- */
+.sidebar {
+    width: 280px; /* Ancho fijo para el sidebar en desktop */
+    background-color: var(--card-bg-color);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: sticky; /* Se mantiene fija al hacer scroll */
+    top: 0;
+    height: 100vh; /* Ocupa el 100% del viewport height */
+    z-index: 100; /* Asegura que esté por encima de otros elementos */
+}
+
+.profile-info {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #00bcd4; /* color celeste */
+  display: block;
+  margin: 0 auto 16px auto;
+  position: static;
+}
+
+.site-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--heading-color);
+}
+
+.tagline {
+    font-size: 1rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.main-nav {
+    width: 100%;
+    flex-grow: 1; /* Permite que la navegación ocupe el espacio restante */
+}
+
+.main-nav ul {
+    list-style: none;
+    width: 100%;
+}
+
+.main-nav li {
+    margin-bottom: 0.75rem;
+}
+
+.main-nav a {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    color: var(--text-color);
+    font-weight: 500;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.main-nav a:hover,
+.main-nav a.active { /* Para resaltar la sección activa si añades JS */
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+.main-nav a i {
+    margin-right: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.sidebar-footer {
+    margin-top: auto; /* Empuja el footer del sidebar hacia abajo */
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    width: 100%;
+    text-align: center;
+}
+
+.social-links-sidebar a {
+    font-size: 1.5rem;
+    margin: 0 0.5rem;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
+
+.social-links-sidebar a:hover {
+    color: var(--primary-color-dark);
+}
+
+
+/* --- 5. Estilos del Contenido Principal (Main Content) --- */
+.content {
+    flex-grow: 1; /* Ocupa el espacio restante horizontalmente */
+    padding: 2rem;
+    overflow-x: hidden; /* Evita scroll horizontal dentro del contenido */
+}
+
+.section {
+    min-height: calc(100vh - 4rem); /* Asegura que cada sección sea visible por completo, restando el padding */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra el contenido verticalmente */
+    padding: 4rem 0; /* Padding superior e inferior para el contenido de la sección */
+    margin-bottom: 4rem; /* Espacio entre secciones */
+    opacity: 0; /* Inicialmente oculto para animación fade-in (JS) */
+    transform: translateY(20px); /* Ligeramente desplazado para animación fade-in (JS) */
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* Estado de sección visible (activado por JS) */
+.section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* --- 6. Estilos de la Sección Hero (Inicio) --- */
+.hero {
+    text-align: center;
+    background: linear-gradient(135deg, var(--accent-color-light) 0%, var(--primary-color) 100%);
+    color: var(--white-color);
+    padding: 6rem 2rem;
+    border-radius: 10px;
+    margin-bottom: 4rem; /* Espacio después de la sección hero */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hero .subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.hero .title {
+    font-size: 4rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--white-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.hero .description {
+    font-size: 1.25rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* --- 7. Estilos de Botones Generales --- */
+.btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    border-radius: 50px; /* Bordes redondeados para un look moderno */
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.primary-btn {
+    background-color: var(--accent-color-dark); /* Color de acento para el botón principal */
+    color: var(--white-color);
+}
+
+.primary-btn:hover {
+    background-color: var(--primary-color-dark);
+    color: var(--white-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.small-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    border-radius: 25px;
+}
+
+.outline-btn {
+    background-color: transparent;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.outline-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+/* --- 8. Estilos de la Sección "Sobre Mí" --- */
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.about-content p {
+    margin-bottom: 1rem;
+}
+
+
+/* --- 9. Estilos de la Sección de Proyectos --- */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Columnas responsivas */
+    gap: 2.5rem;
+    padding: 2rem 0;
+    max-width: 1200px; /* Ancho máximo para el grid */
+    margin: 0 auto;
+}
+
+.project-card {
+    background-color: var(--card-bg-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card:hover {
+    transform: translateY(-8px); /* Efecto de elevación sutil */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.project-card img {
+    width: 100%;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.project-card h3 {
+    font-size: 1.6rem;
+    margin: 1.5rem 1.5rem 0.5rem;
+    color: var(--heading-color);
+}
+
+.project-card p {
+    margin: 0 1.5rem 1rem;
+    font-size: 1.0rem;
+    color: var(--text-color);
+    flex-grow: 1; /* Permite que el párrafo ocupe el espacio */
+}
+
+.project-tech {
+    margin: 0 1.5rem 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.project-tech span {
+    background-color: var(--accent-color-light);
+    color: var(--accent-color-dark);
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px; /* Más redondeado */
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.project-links {
+    margin: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    margin-top: auto; /* Empuja los enlaces al final de la tarjeta */
+}
+
+
+/* --- 10. Estilos de la Sección de Habilidades --- */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.skill-item {
+    background-color: var(--card-bg-color);
+    padding: 2rem 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skill-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.skill-item i {
+    font-size: 4rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.skill-item span {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--heading-color);
+}
+
+.contact-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--heading-color);
+    margin-bottom: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.9;
+}
+
+/* --- 11. Estilos de la Sección de Contacto --- */
+.contact-form {
+    max-width: 900px; /* Igual que .skills-grid */
+    width: 100%;
+    margin: 2rem auto;
+    background-color: var(--card-bg-color);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.section.contact {
+    background: linear-gradient(to right, #fce4ec, #f3e5f5); /* Degradado pastel suave */
+    padding: 4rem 0; /* Asegura buen espacio interno */
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    color: var(--heading-color);
+    font-size: 1rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group textarea {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: var(--font-family-primary);
+    color: var(--text-color);
+    background-color: var(--background-color); /* Fondo ligeramente gris para inputs */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(135, 206, 235, 0.2); /* Sombra de focus sutil */
+}
+
+.form-group textarea {
+    resize: vertical; /* Permite redimensionar verticalmente */
+    min-height: 120px;
+}
+
+.contact-form .btn {
+    width: 100%; /* El botón ocupa todo el ancho del formulario */
+    padding: 1.1rem;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
+
+.form-messages {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding: 0.8rem;
+    border-radius: 5px;
+    font-weight: 600;
+    display: none; /* Ocultar por defecto, mostrar con JS */
+}
+
+.form-messages.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.form-messages.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* --- 12. Estilos del Pie de Página (Footer) --- */
+.footer {
+    background-color: var(--heading-color); /* Fondo oscuro para contraste */
+    color: var(--white-color);
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.9rem;
+    border-top: 5px solid var(--accent-color-dark); /* Línea de acento */
+}
+
+.footer-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.footer p {
+    margin-bottom: 0.5rem;
+}
+
+.footer .footer-link {
+    color: var(--primary-color);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.footer .footer-link:hover {
+    color: var(--accent-color-light);
+}
+
+
+/* --- 13. Responsive Design (Media Queries) --- */
+
+/* Para pantallas más pequeñas que 1024px (ej. tabletas, laptops pequeñas) */
+@media screen and (max-width: 1024px) {
+    .sidebar {
+        width: 250px; /* Reduce un poco el ancho del sidebar */
+        padding: 1.5rem 0.5rem;
+    }
+
+    .site-title {
+        font-size: 1.8rem;
+    }
+
+    .main-nav a {
+        padding: 0.7rem 0.8rem;
+    }
+
+    .content {
+        padding: 1.5rem;
+    }
+
+    .hero .title {
+        font-size: 3.5rem;
+    }
+
+    .hero .description {
+        font-size: 1.1rem;
+    }
+
+    h2 {
+        font-size: 2.2rem;
+    }
+
+    .projects-grid {
+        gap: 2rem;
+    }
+
+    .project-card h3 {
+        font-size: 1.4rem;
+    }
+    .skill-item i {
+        font-size: 3.5rem;
+    }
+}
+
+
+/* Para pantallas muy pequeñas (ej. móviles) */
+@media screen and (max-width: 768px) {
+    .app-container {
+        flex-direction: column; /* Apila el sidebar y el contenido */
+    }
+
+    .sidebar {
+        width: 100%; /* Ocupa todo el ancho */
+        height: auto; /* Altura automática */
+        position: relative; /* Ya no es sticky */
+        padding: 1.5rem 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+ 
+    .profile-info {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-top: 1rem; /* Opcional para bajarla un poquito en el bloque */
+    }
+
+    .profile-pic {
+    filter: brightness(1.1) contrast(1.05);
+    }
+
+    .site-title {
+        font-size: 1.8rem;
+        margin-bottom: 0.2rem;
+        text-align: left;
+    }
+
+    .tagline {
+        font-size: 0.9rem;
+        text-align: left;
+    }
+
+    .main-nav {
+        display: none; /* Oculta la navegación principal por defecto en móviles */
+        /* Podríamos añadir un botón de "menú hamburguesa" y mostrar/ocultar con JS */
+        flex-grow: unset; /* Desactiva el flex-grow */
+        width: auto;
+    }
+
+    .main-nav ul {
+        display: flex; /* Cambia a flexbox para los ítems de navegación */
+        flex-wrap: wrap; /* Permite que los ítems se envuelvan */
+        justify-content: center; /* Centra los ítems */
+        gap: 0.5rem; /* Espacio entre los ítems */
+        margin-top: 1rem;
+    }
+
+    .main-nav li {
+        margin-bottom: 0; /* Elimina el margen vertical */
+    }
+
+    .main-nav a {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .main-nav a i {
+        margin-right: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .sidebar-footer {
+        margin-top: 1.5rem;
+        padding-top: 1rem;
+    }
+
+    .content {
+        padding: 1rem;
+    }
+
+    .section {
+        min-height: unset; /* Elimina la altura mínima para que el contenido fluya */
+        padding: 2rem 0; /* Menos padding en móviles */
+        margin-bottom: 3rem;
+    }
+
+    .hero {
+        padding: 4rem 1.5rem;
+        border-radius: 8px;
+    }
+
+    .hero .title {
+        font-size: 2.8rem;
+    }
+
+    .hero .description {
+        font-size: 1rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr; /* Una columna en móviles */
+        padding: 1rem 0;
+        gap: 1.5rem;
+    }
+
+    .project-card {
+        margin: 0 0.5rem; /* Pequeño margen horizontal en móviles */
+    }
+
+    .project-card h3 {
+        font-size: 1.3rem;
+        margin: 1rem 1rem 0.5rem;
+    }
+    .project-card p, .project-tech span {
+        font-size: 0.9rem;
+    }
+
+    .project-links {
+        margin: 1rem;
+        flex-direction: column; /* Botones apilados */
+        gap: 0.75rem;
+    }
+
+    .project-links .btn {
+        width: 100%; /* Botones de proyecto ocupan todo el ancho */
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 1rem;
+        padding: 1rem 0;
+    }
+
+    .skill-item {
+        padding: 1rem 0.5rem;
+    }
+    .skill-item i {
+        font-size: 3rem;
+    }
+    .skill-item span {
+        font-size: 0.9rem;
+    }
+
+    .contact-form {
+        margin: 1.5rem auto; /* Ajuste para móviles */
+        padding: 1.5rem; /* Ajuste para móviles */
+    }
+    
+    .form-group input, .form-group textarea {
+        padding: 0.7rem 1rem;
+    }
+    .contact-form .btn {
+        font-size: 1.1rem;
+        padding: 0.9rem;
+    }
+
+    .footer {
+        padding: 1.5rem 1rem;
+    }
+}
+
+/* Opcional: Estilos para impresión */
+@media print {
+    .sidebar, .footer, .btn, .social-links-sidebar {
+        display: none !important;
+    }
+    body {
+        background-color: #fff;
+        color: #000;
+        font-size: 12pt;
+    }
+    .content {
+        padding: 0;
+        margin: 0;
+    }
+    .section {
+        opacity: 1 !important;
+        transform: none !important;
+        page-break-after: always;
+        padding: 1rem 0;
+        margin-bottom: 1rem;
+        min-height: unset;
+    }
+    .hero {
+        background: none;
+        color: #000;
+        box-shadow: none;
+        padding: 1rem 0;
+    }
+    h1, h2, h3 {
+        color: #000;
+    }
+    .project-card, .skill-item {
+        box-shadow: none;
+        border: 1px solid #eee;
+    }
+    .project-card img {
+        height: 150px;
+    }
+    a {
+        text-decoration: underline;
+        color: #0056b3;
+    }
+}
+.profile-info {
+  text-align: center;
+  position: relative;
+}
+
+.profile-pic-wrapper {
+  position: absolute;
+  top: -60px; 
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid #00BCD4;
+  object-fit: cover;
+  background: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  .profile-info {
+    padding-top: 1rem;
+  }
+
+  .profile-pic-wrapper {
+    position: static;
+    transform: none;
+    margin-bottom: 1rem;
+  }
+
+  .profile-pic {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+
+
