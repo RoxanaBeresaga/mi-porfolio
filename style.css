@@ -377,7 +377,7 @@ h2::after {
     margin: 0 auto;
     padding: 2rem 0;
 }
-
+/*
 .skill-item {
     background-color: var(--card-bg-color);
     padding: 2rem 1rem;
@@ -385,6 +385,13 @@ h2::after {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+} */
+
+.skill-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .skill-item:hover {
@@ -403,6 +410,12 @@ h2::after {
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--heading-color);
+}
+
+.skill-item img {
+  width: 64px;
+  height: auto;
+  margin: 0 auto 1rem;
 }
 
 .contact-subtitle {
@@ -700,20 +713,38 @@ h2::after {
         width: 100%; /* Botones de proyecto ocupan todo el ancho */
     }
 
+    /* --- Ajuste RESPONSIVE para sección de Habilidades en móviles --- */
     .skills-grid {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        gap: 1rem;
-        padding: 1rem 0;
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas fijas para evitar íconos muy pequeños */
+        gap: 1rem; /* Espaciado entre items reducido para pantallas pequeñas */
+        justify-items: center; /* Centra cada skill horizontalmente */
+        max-width: 100%; /* Asegura que no se desborde del contenedor padre */
+        padding: 1rem 0; /* Padding interno vertical */
     }
 
     .skill-item {
-        padding: 1rem 0.5rem;
+        padding: 1rem; /* Reduce el padding interno para ahorrar espacio vertical */
     }
+
     .skill-item i {
-        font-size: 3rem;
+        font-size: clamp(2.5rem, 5vw, 4rem); 
+        color: var(--primary-color); /* Conserva el color definido */
+        margin-bottom: 0.8rem; /* Espacio entre ícono y texto */
+        transition: transform 0.3s ease; /* Suaviza cualquier efecto al hacer hover */
     }
     .skill-item span {
-        font-size: 0.9rem;
+        font-size: 0.9rem; /* Texto más compacto en móviles */
+        font-weight: 600;
+        text-align: center;
+        display: block;
+        word-wrap: break-word; /* Evita que el texto se desborde */
+    }
+    
+    .skill-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     }
 
     .contact-form {
@@ -814,6 +845,9 @@ h2::after {
     width: 100px;
     height: 100px;
   }
+}
+.skill-item:hover i {
+    transform: scale(1.1); /* Efecto de aumento sutil al pasar el cursor */
 }
 
 
