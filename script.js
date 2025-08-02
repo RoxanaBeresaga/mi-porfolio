@@ -1,10 +1,16 @@
 // script.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. Animación de "Fade-in" al hacer scroll para las secciones ---
-    // Esta función observa cuándo una sección entra en el viewport para añadir la clase 'is-visible'
-    const sections = document.querySelectorAll('.section');
 
+    // --- INICIALIZAR SUPABASE
+    const SUPABASE_URL = 'https://zwxitucszkorpttdandp.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp3eGl0dWNzemtvcnB0dGRhbmRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQxNDQ1NTcsImV4cCI6MjA2OTcyMDU1N30.0OzHalfsKaSRv9R-61WBZUdXLjY1HC1YfBS_LNfqHWY';
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const sections = document.querySelectorAll('.section');
+    // --- 1. Animación de "Fade-in" al hacer scroll para las secciones ---
+    // Esta función observa cuándo una sección entra en el viewport para añadir la clase 'is-visible' 
     const sectionObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -81,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (contactForm) {
         contactForm.addEventListener('submit', function (e) {
-            e.preventDefault(); // Evitar el envío real del formulario por ahora
+            e.preventDefault(); 
 
             // Limpiar mensajes anteriores
             formMessages.textContent = '';
@@ -102,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (email === '') {
                 isValid = false;
                 errorMessage += 'El campo Email es obligatorio.<br>';
-            } else if (!validateEmail(email)) { // Usar una función auxiliar para validar formato de email
+            } else if (!validateEmail(email)) { 
                 isValid = false;
                 errorMessage += 'Por favor, introduce un email válido.<br>';
             }
@@ -112,45 +118,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 errorMessage += 'El campo Mensaje es obligatorio.<br>';
             }
 
-            if (isValid) {
-                // Si todo es válido, simular envío y mostrar mensaje de éxito
-                formMessages.classList.add('success');
-                formMessages.innerHTML = '¡Mensaje enviado con éxito! Te contactaré pronto.';
-                formMessages.style.display = 'block'; // Mostrar el mensaje
+               if (isValid) {
+                (async () => {
+                    const { data, error } = await supabase
+                        .from('messages')
+                        .insert([{ name, email, message }]);
 
-                // Limpiar el formulario
-                contactForm.reset();
+                    if (error) {
+                        formMessages.classList.add('error');
+                        formMessages.innerHTML = 'Hubo un error al enviar tu mensaje. Intentá nuevamente.';
+                        formMessages.style.display = 'block';
+                        console.error(error);
+                    } else {
+                        formMessages.classList.add('success');
+                        formMessages.innerHTML = '¡Mensaje enviado con éxito! Te contactaré pronto.';
+                        formMessages.style.display = 'block';
+                        contactForm.reset();
+                    }
+                })();
+            } 
 
-                // En un proyecto real, aquí harías una petición AJAX (fetch API) al servidor
-                // fetch('/tu-endpoint-de-envio', {
-                //     method: 'POST',
-                //     body: new FormData(contactForm)
-                // })
-                // .then(response => response.json())
-                // .then(data => {
-                //     if (data.success) {
-                //         formMessages.classList.add('success');
-                //         formMessages.textContent = '¡Mensaje enviado con éxito! Te contactaré pronto.';
-                //     } else {
-                //         formMessages.classList.add('error');
-                //         formMessages.textContent = 'Hubo un error al enviar tu mensaje. Inténtalo de nuevo.';
-                //     }
-                //     formMessages.style.display = 'block';
-                // })
-                // .catch(error => {
-                //     formMessages.classList.add('error');
-                //     formMessages.textContent = 'Error de red. Por favor, inténtalo más tarde.';
-                //     formMessages.style.display = 'block';
-                // });
+        }); 
 
-            } else {
-                // Mostrar mensaje de error
-                formMessages.classList.add('error');
-                formMessages.innerHTML = errorMessage;
-                formMessages.style.display = 'block'; // Mostrar el mensaje
-            }
-        });
-    }
+    } 
 
     // Función auxiliar para validar formato de email simple
     function validateEmail(email) {
@@ -158,33 +148,4 @@ document.addEventListener('DOMContentLoaded', () => {
         return re.test(String(email).toLowerCase());
     }
 
-    // --- 4. (Opcional) Funcionalidad de Menú Hamburguesa para Móviles ---
-    // Actualmente, en el CSS para móviles, la navegación está oculta.
-    // Si quisieras un botón para mostrar/ocultar el menú, necesitarías añadir
-    // un botón de menú hamburguesa en el HTML y la siguiente lógica JS:
-
-    // // HTML (añadir un botón en el sidebar, ej. al lado del profile-info)
-    // // <button class="menu-toggle" aria-label="Toggle navigation">
-    // //    <i class="fas fa-bars"></i>
-    // // </button>
-
-    // // CSS (ej. para mostrar/ocultar y animar el sidebar o la nav)
-    // // .sidebar.active { transform: translateX(0); }
-    // // .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; } /* Si el sidebar sale de la pantalla */
-
-    // const menuToggle = document.querySelector('.menu-toggle');
-    // const mainNav = document.querySelector('.main-nav');
-    // const sidebar = document.querySelector('.sidebar'); // O el elemento que quieras animar
-
-    // if (menuToggle) {
-    //     menuToggle.addEventListener('click', () => {
-    //         mainNav.classList.toggle('active'); // O sidebar.classList.toggle('active');
-    //         // También puedes cambiar el icono
-    //         const icon = menuToggle.querySelector('i');
-    //         icon.classList.toggle('fa-bars');
-    //         icon.classList.toggle('fa-times'); // O un icono de "X"
-    //     });
-    // }
-});
-
-
+}); 
